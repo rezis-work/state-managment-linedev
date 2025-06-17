@@ -1,28 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-type Order = {
-  type: "cappuccino" | "espresso" | "latte" | "mocha";
-  price: number;
-  quantity: number;
-};
+function HotelSelection() {
+  const [hotels] = useState([
+    {
+      id: "h1",
+      name: "Grand Hotel",
+      price: 200,
+    },
+    {
+      id: "h2",
+      name: "Luxury Hotel",
+      price: 300,
+    },
+  ]);
+  type Hotel = {
+    id: string;
+    name: string;
+    price: number;
+  };
+  const [selectedHotelId, setSelectedHotelId] = useState<string | null>(null); // vinaxav mtlian objects
 
-function App() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const handleSelectHotel = (hotelId: string) => {
+    setSelectedHotelId(hotelId); // vimeoreb monacems fomelic momdis hotelebis arraidan
+  };
 
-  const total = orders.reduce(
-    (acc, order) => acc + order.price * order.quantity,
-    0
-  );
+  const selectedHotel = hotels.find((h) => h.id === selectedHotelId);
 
   return (
     <div>
-      <h1>Orders</h1>
-      <ul>
-        {orders.map((order) => (
-          <li key={order.type}>{order.type}</li>
-        ))}
-      </ul>
-      <p>Total: ${total}</p>
+      {selectedHotel && (
+        <div>
+          {selectedHotel.name} - ${selectedHotel.price}
+        </div>
+      )}
     </div>
   );
 }
